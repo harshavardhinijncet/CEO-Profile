@@ -13,7 +13,10 @@ const Chev = () => (
 )
 
 const Logos = ({ logos }) => logos?.length ? (
-  <span className="x-logos">{logos.map(l => <span key={l.src}><img src={l.src} alt={l.alt} loading="lazy" /></span>)}</span>
+  <span className="x-logos">{logos.map(l => [
+    l.via && <em key={l.via} className="logo-via">{l.via}</em>,      // Torii · backed by · NCC, read as one line
+    <span key={l.src}><img src={l.src} alt={l.alt} loading="lazy" /></span>,
+  ])}</span>
 ) : null
 
 // a stem that drops (or rises) from the item to a dot on the rail
@@ -231,7 +234,7 @@ export default function Expertise() {
               <h3 className="x-title"><span>{pn.title}</span></h3>
               <span className="x-rail" aria-hidden="true" />
               {pn.items.map((it, k) => (
-                <div key={k} className={`xi xi-${it.t} is-${it.z}`}
+                <div key={k} className={`xi xi-${it.t} is-${it.z}${it.end ? ' is-end' : ''}`}
                   style={{ gridColumn: `${it.c[0] + 1} / span ${it.c[1]}`, '--n': k }}>
                   <Item it={it} />
                 </div>

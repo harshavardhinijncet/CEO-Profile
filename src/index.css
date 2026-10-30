@@ -1435,3 +1435,24 @@ ul{ list-style:none; }
   .vw-ghost{ z-index:0; left:54vw; right:0; top:50%; bottom:auto; width:auto; transform:translateY(-50%); text-align:center;
     text-transform:uppercase; font-size:min(12.5vw,34vh); line-height:1; letter-spacing:.02em; color:#e7e3dd; white-space:nowrap; }
 }
+
+/* Torii · backed by · NCC: the two logos read as one line */
+.logo-via{ align-self:center; font-family:var(--display); font-style:normal; font-size:11px; font-weight:500; letter-spacing:1.8px;
+  text-transform:uppercase; color:var(--grey); white-space:nowrap; }
+.step-logos .logo-via{ margin:0 -4px; }
+.x-logos .logo-via{ margin:0 2px; }
+
+/* a row that ends on its line: the content reads up to a stem on its right edge
+   (top rows start from their line, bottom rows can close on one — an S through the panel) */
+@media (min-width:761px){
+  .xi.is-end > .x-stem{ left:auto; right:0; }
+  .xi.is-end .x-pin{ padding-left:0; padding-right:16px; align-items:flex-end; text-align:right; }
+  .xi.is-end .x-pin p{ margin-left:auto; }
+  .xi.is-end .x-logos{ justify-content:flex-end; }
+}
+
+/* logo wall: a fixed logo height (a % max-height does not resolve in the card), so no logo spills out */
+@media (min-width:761px){
+  .x-wall li{ display:grid; place-items:center; }
+  .x-wall img{ max-height:min(50px,calc(clamp(60px,calc((var(--zone) - 80px) / 2),96px) - 28px)); }
+}

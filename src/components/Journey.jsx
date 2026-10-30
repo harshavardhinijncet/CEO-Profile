@@ -112,7 +112,10 @@ export default function Journey() {
           // logos sit under each step's text box; a step with none shows line emblems in the same circles
           const logos = c.logos.length > 0 ? (
             <div className="step-logos">
-              {c.logos.map((l, k) => <span key={l.src} style={{ '--k': k }}><img src={l.src} alt={l.alt} /></span>)}
+              {c.logos.map((l, k) => [
+                l.via && <em key={l.via} className="logo-via">{l.via}</em>,      // Torii · backed by · NCC
+                <span key={l.src} style={{ '--k': k }}><img src={l.src} alt={l.alt} /></span>,
+              ])}
             </div>
           ) : c.marks?.length > 0 && (
             <div className="step-logos is-marks" aria-hidden="true">

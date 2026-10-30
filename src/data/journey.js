@@ -57,7 +57,7 @@ export const chapters = [
     text: 'An AI-driven tech education platform, backed by NCC, making engineers industry-ready.',
     points: ['AI-driven tech education platform', 'Backed by NCC', 'Industry-ready engineers'],
     roles: ['Founder & CEO', 'Backed by NCC'],
-    logos: [{ src: logo('logo-torii.svg'), alt: 'Torii Minds' }, { src: logo('logo-ncc.png'), alt: 'NCC Limited' }],
+    logos: [{ src: logo('logo-torii.svg'), alt: 'Torii Minds' }, { src: logo('logo-ncc.png'), alt: 'NCC Limited', via: 'backed by' }],
   },
   {
     // year as given by the user; partner statuses from the Company Profile app's "AI partners" block
