@@ -7,7 +7,7 @@ import pageTo from './pageTo.js'
 // Each page change is a calm cover-and-reveal (pageTo), never a visible scroll.
 export default function usePager(selector) {
   useEffect(() => {
-    const desktop = window.matchMedia('(min-width: 761px)')
+    const desktop = window.matchMedia('(min-width: 1025px)')
     let locked = false, unlockTimer = 0, touchY = null
 
     const targets = () => [...document.querySelectorAll(selector)]

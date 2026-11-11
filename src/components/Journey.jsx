@@ -43,7 +43,7 @@ export default function Journey() {
   useEffect(() => {
     const tl = tlRef.current, section = ref.current
     if (!tl || !section) return
-    const mobile = window.matchMedia('(max-width: 760px)')
+    const mobile = window.matchMedia('(max-width: 1024px)')
     const max = (sel, prop = 'offsetHeight') => Math.max(0, ...[...tl.querySelectorAll(sel)].map(el => el[prop]))
     const fit = () => {
       tl.classList.remove('compact')

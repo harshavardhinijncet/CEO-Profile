@@ -199,7 +199,7 @@ export default function Expertise() {
   const handlePillarClick = pId => {
     const idx = first(pId)
     go(idx)
-    if (window.matchMedia('(max-width: 760px)').matches) {
+    if (window.matchMedia('(max-width: 1024px)').matches) {
       const el = document.getElementById(`pillar-${pId}`)
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' })

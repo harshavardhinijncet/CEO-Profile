@@ -1,0 +1,94 @@
+/* Babji Neelam · image profile — a corporate brochure in portrait A4, after the client's "company profile" reference:
+   white pages, fine diagonal line work, solid yellow blocks and tabs, bold black titles with a yellow highlight.
+   Every photo keeps its own shape (width set, height follows), so no picture is ever cropped. */
+@page{ size:210mm 297mm; margin:0; }
+:root{ --y:#f5b301; --y-soft:#fff4d1; --ink:#121212; --ink-2:#3d3d3d; --mute:#8d8a85; --line:#e4e1dc; --paper:#ffffff; --tint:#f6f5f2; }
+*{ box-sizing:border-box; margin:0; padding:0; }
+html,body{ background:#8a8a8a; }
+body{ font-family:"Open Sans",Arial,sans-serif; color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.page{ position:relative; width:210mm; height:297mm; overflow:hidden; background:var(--paper); page-break-after:always; margin:0 auto 8mm;
+  padding:22mm 16mm 24mm; display:flex; flex-direction:column; }
+.page:last-child{ page-break-after:auto; }
+@media print{ html,body{ background:#fff; } .page{ margin:0; } }
+
+/* fine diagonal lines, as on the reference cover; placed in a corner of most pages */
+.lines{ position:absolute; pointer-events:none; width:120mm; height:120mm; opacity:.9;
+  background:repeating-linear-gradient(135deg,transparent 0 9mm,var(--line) 9mm 9.25mm); }
+.lines.tr{ top:-30mm; right:-30mm; -webkit-mask-image:radial-gradient(circle at 70% 30%,#000 30%,transparent 70%); mask-image:radial-gradient(circle at 70% 30%,#000 30%,transparent 70%); }
+.lines.bl{ bottom:-34mm; left:-34mm; -webkit-mask-image:radial-gradient(circle at 30% 70%,#000 30%,transparent 70%); mask-image:radial-gradient(circle at 30% 70%,#000 30%,transparent 70%); }
+
+/* running head + foot */
+.run{ position:absolute; top:9mm; left:16mm; right:16mm; display:flex; align-items:center; justify-content:space-between;
+  font-family:Urbanist,sans-serif; font-size:7pt; font-weight:600; letter-spacing:1.6pt; text-transform:uppercase; color:var(--mute); }
+.run img{ height:5.4mm; display:block; }
+.foot{ position:absolute; bottom:9mm; left:16mm; right:16mm; display:flex; align-items:center; justify-content:space-between;
+  font-family:Urbanist,sans-serif; font-size:7pt; font-weight:600; letter-spacing:1.4pt; text-transform:uppercase; color:var(--mute); }
+.foot b{ color:var(--ink); }
+.foot .no{ display:grid; place-items:center; width:9mm; height:9mm; background:var(--y); color:var(--ink); font-size:9pt; font-weight:800; letter-spacing:0; }
+.tab{ position:absolute; right:0; top:44mm; width:6mm; height:34mm; background:var(--y); }
+
+/* type */
+.kick{ display:flex; align-items:center; gap:2.4mm; font-family:Urbanist,sans-serif; font-size:7.6pt; font-weight:700; letter-spacing:2pt; text-transform:uppercase; color:var(--mute); }
+.kick::before{ content:""; width:2.6mm; height:2.6mm; background:var(--y); }
+h1,h2{ font-family:Urbanist,sans-serif; font-weight:800; color:var(--ink); letter-spacing:-.3pt; }
+h2{ font-size:25pt; line-height:1.05; margin-top:2.6mm; }
+h2 mark,h1 mark{ background:var(--y); color:var(--ink); padding:0 2mm; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+h3{ font-family:Urbanist,sans-serif; font-size:11pt; font-weight:800; color:var(--ink); }
+h4{ font-family:Urbanist,sans-serif; font-size:8.6pt; font-weight:800; letter-spacing:1.2pt; text-transform:uppercase; color:var(--ink); }
+p,li{ font-size:8.6pt; line-height:1.62; color:var(--ink-2); }
+b{ color:var(--ink); }
+.lead{ font-size:10pt; line-height:1.6; color:var(--ink-2); }
+.small{ font-size:7.6pt; }
+.cap{ margin-top:1.6mm; font-family:Urbanist,sans-serif; font-size:7pt; font-weight:600; color:var(--mute); }
+.rule{ width:14mm; height:1.4mm; background:var(--y); margin:4mm 0; }
+
+/* bullet lists: small yellow squares */
+.ul{ list-style:none; display:flex; flex-direction:column; gap:1.8mm; }
+.ul li{ position:relative; padding-left:5mm; }
+.ul li::before{ content:""; position:absolute; left:0; top:1.6mm; width:2mm; height:2mm; background:var(--y); }
+
+/* photos: never cropped; the frame is the photo's own shape. .acc adds a yellow block peeking out behind one corner */
+.ph{ position:relative; }
+.ph img{ position:relative; z-index:1; display:block; width:100%; height:auto; border-radius:1.2mm; }
+.ph.acc::before{ content:""; position:absolute; z-index:0; left:-3mm; top:-3mm; width:40%; height:40%; background:var(--y); }
+.ph.acc-r::before{ content:""; position:absolute; z-index:0; right:-3mm; bottom:-3mm; width:40%; height:40%; background:var(--y); }
+.cut{ display:block; height:auto; }   /* transparent cut-outs of him */
+
+/* layout helpers */
+.grid{ display:grid; gap:6mm; }
+.g2{ grid-template-columns:1fr 1fr; } .g3{ grid-template-columns:repeat(3,1fr); } .g4{ grid-template-columns:repeat(4,1fr); }
+.mt1{ margin-top:2mm; } .mt2{ margin-top:4mm; } .mt3{ margin-top:6mm; } .mt4{ margin-top:9mm; } .mt5{ margin-top:13mm; }
+.box{ background:var(--tint); padding:5mm; }
+.ybox{ background:var(--y); padding:6mm; }
+.ybox p,.ybox li{ color:var(--ink); }
+.dark{ background:var(--ink); color:#fff; padding:6mm; }
+.dark p,.dark li{ color:rgba(255,255,255,.82); } .dark b,.dark h3,.dark h4{ color:#fff; }
+.logo{ display:block; height:7mm; width:auto; max-width:100%; object-fit:contain; object-position:left center; }
+
+/* figures */
+.facts{ display:grid; gap:4mm; }
+.fact{ border-left:1.2mm solid var(--y); padding:.6mm 0 .6mm 3mm; }
+.fact b{ display:block; font-family:Urbanist,sans-serif; font-size:17pt; font-weight:900; line-height:1; color:var(--ink); }
+.fact small{ display:block; margin-top:1mm; font-family:Urbanist,sans-serif; font-size:6.8pt; font-weight:700; letter-spacing:1pt; text-transform:uppercase; color:var(--mute); }
+.dark .fact b{ color:var(--y); } .dark .fact small{ color:rgba(255,255,255,.6); }
+
+/* contents */
+.toc{ list-style:none; }
+.toc li{ display:flex; align-items:baseline; gap:2mm; padding:2.3mm 0; border-bottom:.3mm solid var(--line); font-size:9pt; color:var(--ink); }
+.toc li i{ flex:1; border-bottom:.35mm dotted #bdb9b2; transform:translateY(-1mm); }
+.toc li em{ font-style:normal; font-family:Urbanist,sans-serif; font-weight:800; }
+
+/* timeline */
+.tl{ list-style:none; position:relative; padding-left:8mm; }
+.tl::before{ content:""; position:absolute; left:2.2mm; top:1mm; bottom:1mm; width:.4mm; background:var(--line); }
+.tl li{ position:relative; padding-bottom:4.2mm; }
+.tl li::before{ content:""; position:absolute; left:-7.4mm; top:.6mm; width:3.4mm; height:3.4mm; background:var(--y); border:1mm solid #fff; box-shadow:0 0 0 .3mm var(--y); }
+.tl .yr{ font-family:Urbanist,sans-serif; font-size:7.4pt; font-weight:800; letter-spacing:1.2pt; text-transform:uppercase; color:#c48f00; }
+
+/* tables */
+table{ width:100%; border-collapse:collapse; font-size:8.2pt; }
+th{ text-align:left; padding:2mm 2.4mm; background:var(--ink); color:#fff; font-family:Urbanist,sans-serif; font-size:7.2pt; letter-spacing:1pt; text-transform:uppercase; }
+td{ padding:1.9mm 2.4mm; border-bottom:.3mm solid var(--line); color:var(--ink-2); }
+tr:nth-child(even) td{ background:var(--tint); }
+td:first-child{ font-weight:700; color:var(--ink); }
+td.n{ font-family:Urbanist,sans-serif; font-weight:800; color:var(--ink); }

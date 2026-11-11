@@ -6,6 +6,9 @@ import Strip from './components/Strip.jsx'
 import Journey from './components/Journey.jsx'
 import Vision from './components/Vision.jsx'
 import Expertise from './components/Expertise.jsx'
+import Programs from './components/Programs.jsx'
+import Achievements from './components/Achievements.jsx'
+import Contact from './components/Contact.jsx'
 import { profile } from './data/profile.js'
 import useParallax from './hooks/useParallax.js'
 import usePager from './hooks/usePager.js'
@@ -15,7 +18,7 @@ export default function App() {
   const [ready, setReady] = useState(false)
 
   useParallax(appRef)
-  usePager('.app, .journey, .vision, .expertise')
+  usePager('.app, .journey, .vision, .expertise, .programs, .achievements, .contact')
 
   // intro starts once the portrait has loaded (safety timeout in case it never fires)
   useEffect(() => {
@@ -46,6 +49,9 @@ export default function App() {
       <Journey />
       <Vision />
       <Expertise />
+      <Programs />
+      <Achievements />
+      <Contact />
 
       <footer className="site-footer">
         <div className="footer-inner">

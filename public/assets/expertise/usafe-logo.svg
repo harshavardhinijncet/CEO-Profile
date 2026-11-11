@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 330 251" role="img" aria-label="U Safe">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2c21b"/>
+      <stop offset="1" stop-color="#cfd62a"/>
+    </linearGradient>
+    <linearGradient id="d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5aa9ea"/>
+      <stop offset="1" stop-color="#1f6fc4"/>
+    </linearGradient>
+  </defs>
+  <!-- the mark: an open hook, like a sheltering hand -->
+  <path d="M118 22v34a47 47 0 0 0 94 0V12" fill="none" stroke="url(#g)" stroke-width="15" stroke-linecap="round"/>
+  <!-- U with a drop inside -->
+  <path d="M46 150v34a28 28 0 0 0 56 0v-34" fill="none" stroke="url(#g)" stroke-width="13" stroke-linecap="round"/>
+  <path d="M74 166c-7 10-11 16-11 21a11 11 0 0 0 22 0c0-5-4-11-11-21Z" fill="url(#d)"/>
+  <!-- Safe -->
+  <text x="112" y="214" font-family="'Segoe UI','Helvetica Neue',Arial,sans-serif" font-size="78" font-weight="500" letter-spacing="1" fill="#7fa8dc">Safe</text>
+</svg>

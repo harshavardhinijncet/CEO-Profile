@@ -1,0 +1,544 @@
+<!doctype html>
+<!-- Babji Neelam · image profile — a 15-page corporate brochure in portrait A4 (styles: brochure.css).
+     Every photo is shown whole: each frame takes the photo's own shape. Every fact comes from the site's data,
+     the Road Map / Company Profile apps or the posters the client supplied.
+     Build: npm run pdf (prep.py makes high-quality JPEG copies of the photos, build.mjs prints with headless Edge). -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Babji Neelam · Profile</title>
+<link rel="stylesheet" href="/pdf/fonts/fonts.css" />
+<link rel="stylesheet" href="/pdf/brochure.css" />
+<style>
+  /* cover */
+  .cover{ padding:0; }
+  .cover .brand{ position:absolute; left:16mm; top:16mm; display:flex; align-items:center; gap:4mm; }
+  .cover .brand img{ height:8mm; } .cover .brand i{ width:.3mm; height:7mm; background:#d9d6d0; }
+  .cover .year{ position:absolute; right:16mm; top:0; width:13mm; padding:6mm 0 4mm; background:var(--y); text-align:center;
+    font-family:Urbanist,sans-serif; font-weight:900; font-size:13pt; line-height:1.05; color:var(--ink); }
+  .cover .title{ position:absolute; left:16mm; top:80mm; width:84mm; }
+  .cover h1{ font-size:44pt; line-height:.98; letter-spacing:-.6pt; }
+  .cover .sub{ margin-top:5mm; font-family:Urbanist,sans-serif; font-size:10pt; font-weight:700; letter-spacing:1.4pt; text-transform:uppercase; color:var(--ink); }
+  .cover .lede{ position:absolute; left:16mm; top:150mm; width:80mm; }
+  .cover .facts{ position:absolute; left:16mm; top:196mm; width:80mm; grid-template-columns:1fr 1fr; gap:6mm 5mm; }
+  .cover .him{ position:absolute; right:6mm; bottom:34mm; width:104mm; }
+  .cover .bar{ position:absolute; left:0; right:0; bottom:0; height:34mm; background:var(--ink); display:flex; align-items:center; justify-content:space-between; padding:0 16mm; }
+  .cover .bar .who b{ display:block; font-family:Urbanist,sans-serif; font-size:13pt; font-weight:800; color:var(--y); }
+  .cover .bar .who span{ font-family:Urbanist,sans-serif; font-size:8pt; font-weight:600; letter-spacing:1.4pt; text-transform:uppercase; color:#fff; }
+  .cover .bar .ct{ text-align:right; font-family:Urbanist,sans-serif; font-size:8.4pt; font-weight:600; line-height:1.7; color:#fff; }
+  .cover .bar .ct b{ color:var(--y); }
+
+  /* programme rows */
+  .prog{ display:grid; grid-template-columns:52mm 1fr; gap:6mm; align-items:start; padding:3.6mm 0; border-bottom:.3mm solid var(--line); }
+  .prog:last-child{ border:0; }
+  .prog .logo{ height:8mm; }
+
+  /* product cards */
+  .pc{ background:var(--tint); padding:3.6mm; }
+  .pc .logo{ height:8mm; }
+  .pc h4{ margin-top:2.4mm; }
+  .pc p{ font-size:7.6pt; line-height:1.5; margin-top:.6mm; }
+
+  /* centres of excellence: logo + name + tagline cards */
+  .coes{ display:grid; grid-template-columns:repeat(4,1fr); gap:2.4mm; }
+  .coe{ display:grid; grid-template-columns:9mm 1fr; gap:2.4mm; align-items:center; padding:2.2mm 2.4mm; background:var(--tint); }
+  .coe img{ display:block; width:9mm; height:7mm; object-fit:contain; }
+  .coe h4{ font-size:7pt; letter-spacing:.4pt; line-height:1.2; }
+  .coe p{ font-size:6.4pt; line-height:1.3; margin-top:.4mm; }
+  /* logo wall */
+  .wall{ display:grid; grid-template-columns:repeat(7,1fr); gap:5mm; align-items:center; padding:5mm; background:var(--tint); }
+  .wall img{ display:block; width:100%; height:9mm; object-fit:contain; }
+
+  /* thanks */
+  .thanks h1{ font-size:62pt; line-height:.9; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ 01 · cover -->
+<section class="page cover">
+  <div class="lines tr" style="width:170mm;height:170mm;top:-40mm;right:-50mm"></div>
+  <div class="lines bl"></div>
+  <div class="brand"><img src="/assets/th-logo.png" alt="Technical Hub" /><i></i><img src="/assets/expertise/torii.svg" alt="Torii Minds" style="height:6.4mm" /></div>
+  <div class="year">2<br />0<br />2<br />6</div>
+  <div class="title">
+    <p class="kick">Leadership profile</p>
+    <h1 style="margin-top:4mm">BABJI<br /><mark>NEELAM</mark></h1>
+    <p class="sub">Founder &amp; CEO<br />Technical Hub &amp; Torii Minds</p>
+  </div>
+  <p class="lede lead">Three decades across teaching, global IT and entrepreneurship: from a lab technician at APTECH in 1997, to IBM and Wipro, to founding <b>Technical Hub</b> in 2016 and <b>Torii Minds</b> in 2025.</p>
+  <div class="facts">
+    <div class="fact"><b>16,000+</b><small>Students certified</small></div>
+    <div class="fact"><b>20+</b><small>Centres of Excellence</small></div>
+    <div class="fact"><b>20+</b><small>B2B apps deployed</small></div>
+    <div class="fact"><b>7</b><small>Products built</small></div>
+  </div>
+  <img class="him cut" src="/assets/babji-hero.webp" data-bg="#ffffff" alt="Babji Neelam" />
+  <div class="bar">
+    <div class="who"><b>Babji Neelam</b><span>Founder &amp; CEO</span></div>
+    <div class="ct"><b>M</b> &nbsp;+91 98498 01605<br /><b>E</b> &nbsp;babjineelam@gmail.com<br /><b>in</b> &nbsp;linkedin.com/in/babjineelam</div>
+  </div>
+</section>
+
+<!-- ============================================================ 02 · contents + welcome -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Contents</span></div>
+  <div class="lines tr"></div>
+  <div class="grid g2" style="gap:10mm;align-items:start">
+    <div>
+      <p class="kick">Inside</p>
+      <h2>Table of<br /><mark>Contents</mark></h2>
+      <ul class="toc mt4">
+        <li>About Babji Neelam <i></i><em>03</em></li>
+        <li>Leadership Journey <i></i><em>04</em></li>
+        <li>Teaching &amp; Global IT <i></i><em>05</em></li>
+        <li>Ventures &amp; AI Partners <i></i><em>06</em></li>
+        <li>The Four-Year Engineer <i></i><em>07</em></li>
+        <li>Signature Programmes <i></i><em>08</em></li>
+        <li>Centres of Excellence <i></i><em>09</em></li>
+        <li>Certifications in Numbers <i></i><em>10</em></li>
+        <li>Placements 2025 <i></i><em>11</em></li>
+        <li>Products &amp; Launches <i></i><em>12</em></li>
+        <li>Digital Branding <i></i><em>13</em></li>
+        <li>Frames of Impact <i></i><em>14</em></li>
+        <li>Let’s Connect <i></i><em>15</em></li>
+      </ul>
+    </div>
+    <div>
+      <div class="ybox"><h3 style="font-size:15pt;line-height:1.15">Welcome to the<br />profile of Babji Neelam</h3></div>
+      <figure class="ph mt3"><img src="/assets/gallery/x059.webp" alt="" /><figcaption class="cap">Addressing trainees on campus</figcaption></figure>
+      <p class="mt3" style="font-family:Urbanist,sans-serif;font-size:14pt;line-height:1.35;color:var(--ink)">Talent was <b style="font-weight:900">never</b> the shortage. <b style="font-weight:900">Industry readiness</b> was. My mission is to bridge that gap.</p>
+      <div class="rule"></div>
+      <p class="small"><b>Babji Neelam</b> · on his vision</p>
+    </div>
+  </div>
+  <div class="grid g2 mt4">
+    <figure class="ph acc"><img src="/assets/gallery/students-selfie.webp" alt="" /><figcaption class="cap">With the students</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/selfie-white.webp" alt="" /><figcaption class="cap">With thousands of trainees</figcaption></figure>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">02</span></div>
+</section>
+
+<!-- ============================================================ 03 · about -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>About</span></div>
+  <div class="tab"></div>
+  <div class="grid" style="grid-template-columns:1fr 66mm;gap:8mm">
+    <div>
+      <p class="kick">Who he is</p>
+      <h2>About <mark>Babji</mark><br />Neelam</h2>
+      <p class="lead mt3"><b>Babji Neelam</b> is the Founder &amp; CEO of <b>Technical Hub</b>, a skill-development and incubation centre founded in 2016, and of <b>Torii Minds</b>, an AI-driven tech-education platform launched in 2025 and backed by <b>NCC</b>.</p>
+      <p class="mt2">He began in August 1997 as a Lab Technician at <b>APTECH</b>, taught at Datapro, ICSS and NetGSC, and was faculty at the Aditya Degree and Aditya Engineering colleges. From February 2005 to January 2016 he worked in global IT: as a Java Software Engineer at <b>IBM</b>, then as a Project Manager at <b>Wipro Technologies</b>, on site in Australia and Switzerland.</p>
+      <p class="mt2">His idea is simple: academic success has to translate into employability, so that every graduate steps into the workplace <b>ready to contribute from day one.</b></p>
+      <div class="facts mt4" style="grid-template-columns:1fr 1fr 1fr">
+        <div class="fact"><b>16,000+</b><small>Students certified</small></div>
+        <div class="fact"><b>20+</b><small>Courses launched</small></div>
+        <div class="fact"><b>20+</b><small>B2B apps deployed</small></div>
+      </div>
+    </div>
+    <img class="cut" src="/assets/babji-black.webp" data-bg="#ffffff" style="width:66mm;margin-top:8mm" alt="Babji Neelam" />
+  </div>
+  <div class="grid g2 mt4" style="align-items:start">
+    <div class="dark">
+      <h4 style="color:var(--y)">What he believes</h4>
+      <p class="mt1">Technical education should end in a job, not a certificate alone: mentored by working engineers, measured by industry certifications and proven on live projects.</p>
+    </div>
+    <div class="box">
+      <h4>In one line</h4>
+      <ul class="ul mt1">
+        <li><b>1997 – 2004</b> · the educator</li>
+        <li><b>2005 – 2016</b> · the technologist, IBM &amp; Wipro</li>
+        <li><b>2016 – today</b> · the founder, Technical Hub &amp; Torii Minds</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid g2 mt4">
+    <figure class="ph"><img src="/assets/gallery/officials.webp" alt="" /><figcaption class="cap">With education leaders</figcaption></figure>
+    <figure class="ph acc-r"><img src="/assets/gallery/degree-award.webp" alt="" /><figcaption class="cap">Honoured at Aditya Degree &amp; PG College</figcaption></figure>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">03</span></div>
+</section>
+
+<!-- ============================================================ 04 · journey -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Journey</span></div>
+  <div class="lines tr"></div>
+  <p class="kick">1997 to 2026</p>
+  <h2>Leadership <mark>Journey</mark></h2>
+  <div class="grid mt4" style="grid-template-columns:1fr 74mm;gap:9mm;align-items:start">
+    <ul class="tl">
+      <li><p class="yr">Aug 1997 – Dec 2004</p><h3>The Educator</h3><p>From Lab Technician at APTECH to Senior Trainer at NetGSC, then faculty at the Aditya colleges.</p></li>
+      <li><p class="yr">Feb 2005 – Jan 2016</p><h3>The Technologist</h3><p>Java Software Engineer at IBM, then Project Manager at Wipro Technologies.</p>
+        <div style="display:flex;gap:4mm;margin-top:2mm"><img class="logo" src="/assets/journey/logo-ibm.png" style="height:5mm" alt="IBM" /><img class="logo" src="/assets/journey/logo-wipro.png" style="height:6mm" alt="Wipro" /></div></li>
+      <li><p class="yr">2016</p><h3>The Founder</h3><p>Technical Hub is founded: a skill-development and incubation centre bridging academia and industry.</p></li>
+      <li><p class="yr">2019</p><h3>The Builder</h3><p>From training centre to solutions company, building enterprise apps for corporate clients.</p></li>
+      <li><p class="yr">2025</p><h3>The Next Chapter</h3><p>Torii Minds is launched: an AI-driven tech-education platform, backed by NCC.</p>
+        <div style="display:flex;gap:4mm;align-items:center;margin-top:2mm"><img class="logo" src="/assets/journey/logo-torii.svg" style="height:4.4mm" alt="Torii" /><img class="logo" src="/assets/journey/logo-ncc.png" style="height:6mm" alt="NCC" /></div></li>
+      <li><p class="yr">2026</p><h3>The AI Era</h3><p>Partnering with Claude, OpenAI and Sarvam AI to lead AI-first education.</p>
+        <div style="display:flex;gap:4mm;margin-top:2mm"><img class="logo" src="/assets/journey/logo-claude.png" style="height:5mm" alt="" /><img class="logo" src="/assets/journey/logo-openai.png" style="height:5mm" alt="" /><img class="logo" src="/assets/journey/logo-sarvam.png" style="height:5mm" alt="" /></div></li>
+    </ul>
+    <div>
+      <figure class="ph acc"><img src="/assets/gallery/x541.webp" alt="" /><figcaption class="cap">15+ years with IBM and Wipro</figcaption></figure>
+      <figure class="ph mt3"><img src="/assets/gallery/x204.webp" alt="" /><figcaption class="cap">The Torii team</figcaption></figure>
+      <div class="grid g2 mt3" style="gap:4mm">
+        <figure class="ph"><img src="/assets/gallery/thub-2016-2023.webp" alt="" /><figcaption class="cap">Technical Hub, 2016 to 2023</figcaption></figure>
+        <figure class="ph"><img src="/assets/gallery/claude-partner.webp" alt="" /><figcaption class="cap">Claude Partner Network</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">04</span></div>
+</section>
+
+<!-- ============================================================ 05 · teaching & global IT -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Teaching &amp; IT</span></div>
+  <div class="tab"></div>
+  <p class="kick">1997 to 2016</p>
+  <h2>Teaching &amp; <mark>Global IT</mark></h2>
+  <div class="grid g2 mt4" style="gap:9mm;align-items:start">
+    <div>
+      <h4>Teaching · 1997 – 2004</h4>
+      <ul class="ul mt2">
+        <li><b>APTECH</b>, Lab Technician: hands-on lab support at the grassroots of technical education.</li>
+        <li><b>Datapro</b>, Junior Technical Trainer: complex concepts as bite-sized lessons for beginners.</li>
+        <li><b>ICSS</b>, Technical Trainer: structured, advanced curricula for a wider audience.</li>
+        <li><b>NetGSC</b>, Senior Technical Trainer: advanced technologies, and mentoring fellow trainers.</li>
+        <li><b>Aditya Degree College</b>, Faculty: industry-focused teaching in undergraduate classrooms.</li>
+        <li><b>Aditya Engineering College</b>, Faculty: preparing engineering cohorts for the global tech industry.</li>
+      </ul>
+      <figure class="ph acc mt4"><img src="/assets/gallery/cisco-panel.webp" alt="" /><figcaption class="cap">Speaker, Cisco Networking Academy Conference 2019</figcaption></figure>
+    </div>
+    <div>
+      <h4>IT Industry · 2005 – 2016</h4>
+      <ul class="ul mt2">
+        <li><b>IBM</b>, Java Software Engineer: Java engineering for finance and fintech platforms.</li>
+        <li><b>Wipro Technologies</b>, Project Manager: led delivery for global clients.</li>
+      </ul>
+      <div class="facts mt3" style="grid-template-columns:1fr 1fr">
+        <div class="fact"><b>11</b><small>Years in global IT</small></div>
+        <div class="fact"><b>7</b><small>Years teaching</small></div>
+      </div>
+      <div class="box mt3">
+        <h4>On site</h4>
+        <ul class="ul mt1"><li><b>Australia</b>: Sydney &amp; Brisbane</li><li><b>Switzerland</b>: Zurich &amp; Basel</li></ul>
+      </div>
+      <figure class="ph mt4"><img src="/assets/gallery/press-1.webp" alt="" /><figcaption class="cap">Technical Hub success, press interview</figcaption></figure>
+    </div>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">05</span></div>
+</section>
+
+<!-- ============================================================ 06 · ventures & AI -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Ventures</span></div>
+  <div class="lines tr"></div>
+  <p class="kick">2016 to today</p>
+  <h2>Ventures &amp; <mark>AI Partners</mark></h2>
+  <div class="grid g2 mt4">
+    <div class="box"><img class="logo" src="/assets/th-logo.png" style="height:8mm" alt="Technical Hub" /><h3 class="mt2">Technical Hub · 2016</h3>
+      <p class="mt1">A skill-development and incubation centre whose certification-aligned programmes make engineers job-ready.</p></div>
+    <div class="box"><div style="display:flex;align-items:center;gap:3mm"><img class="logo" src="/assets/expertise/torii.svg" style="height:6.4mm" alt="Torii Minds" /><span class="cap" style="margin:0">backed by</span><img class="logo" src="/assets/journey/logo-ncc.png" style="height:8mm" alt="NCC" /></div>
+      <h3 class="mt2">Torii Minds · 2025</h3>
+      <p class="mt1">A tech-education platform, named after the Japanese Torii gate, for coding, AI and career readiness.</p></div>
+  </div>
+  <div class="grid g2 mt4" style="align-items:start">
+    <div>
+      <h4>AI partners</h4>
+      <ul class="ul mt2">
+        <li><b>Claude</b> · Certified Services Partner</li>
+        <li><b>OpenAI</b> · Select Partner</li>
+        <li><b>Sarvam AI</b> · partner</li>
+        <li><b>QQ Media</b> · mentoring a young media venture</li>
+      </ul>
+    </div>
+    <div class="facts" style="grid-template-columns:1fr 1fr">
+      <div class="fact"><b>10</b><small>Claude Certified Architects</small></div>
+      <div class="fact"><b>900+</b><small>Anthropic course completions</small></div>
+      <div class="fact"><b>300+</b><small>AI Ready Engineer trainees</small></div>
+      <div class="fact"><b>20+</b><small>Centres of Excellence</small></div>
+    </div>
+  </div>
+  <div class="grid g2 mt4">
+    <figure class="ph acc"><img src="/assets/gallery/claude-team.webp" alt="" /><figcaption class="cap">Officially partnered with Anthropic</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/x151.webp" alt="" /><figcaption class="cap">AI Centre of Excellence launch</figcaption></figure>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">06</span></div>
+</section>
+
+<!-- ============================================================ 07 · four-year engineer -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Roadmap</span></div>
+  <div class="tab"></div>
+  <p class="kick">Technical Hub × Torii Minds</p>
+  <h2>The Four-Year <mark>Engineer</mark></h2>
+  <p class="lead mt2">A B.Tech roadmap from semester 1-1 to 4-2: one programme for every year.</p>
+  <div class="grid g2 mt4" style="gap:6mm">
+    <div class="box" style="border-top:1.4mm solid var(--y)"><p class="cap" style="margin:0">Year 1 · Foundations</p><img class="logo mt2" src="/assets/vision/bamboo.png" style="height:13mm" alt="Bamboo Coder" />
+      <h3 class="mt2">Bamboo Coder</h3><p class="mt1">Roots first: programming logic, the first AI literacy and the habits of a coder.</p></div>
+    <div class="box" style="border-top:1.4mm solid var(--y)"><p class="cap" style="margin:0">Year 2 · Core CS &amp; projects</p><img class="logo mt2" src="/assets/programs/skillup.png" style="height:13mm" alt="SkillUp Coder" />
+      <h3 class="mt2">SkillUp Coder</h3><p class="mt1">Core computer science, real projects and the first taste of industry.</p></div>
+    <div class="box" style="border-top:1.4mm solid var(--y)"><p class="cap" style="margin:0">Year 3 · Industry stacks &amp; AI</p>
+      <div style="display:flex;gap:4mm;align-items:center" class="mt2"><img class="logo" src="/assets/vision/driveready.png" style="height:8mm" alt="DriveReady" /><img class="logo" src="/assets/vision/aiready.png" style="height:13mm" alt="AI Ready Engineer" /></div>
+      <h3 class="mt2">Drive Ready · AI Ready Engineer</h3><p class="mt1">Industry stacks, AI engineering and placement readiness.</p></div>
+    <div class="box" style="border-top:1.4mm solid var(--y)"><p class="cap" style="margin:0">Year 4 · Production &amp; placement</p><img class="logo mt2" src="/assets/vision/owl.png" style="height:13mm" alt="Owl Coder" />
+      <h3 class="mt2">Owl Coder</h3><p class="mt1">Production AI, live campus projects and the placement run.</p></div>
+  </div>
+  <div class="dark mt4" style="display:grid;grid-template-columns:auto 1fr;gap:6mm;align-items:center">
+    <img class="logo" src="/assets/programs/moon.png" style="height:15mm" alt="Moon Coder" />
+    <p><b>Moon Coder</b>, from semester 2-2 to 3-1: extra coding hours that sharpen competitive-coding speed. <b>AI Ready Engineer</b>: a structured path from the first AI class to an AI engineer, delivered with Torii Minds.</p>
+  </div>
+  <figure class="ph acc-r mt4" style="width:98mm"><img src="/assets/gallery/x501.webp" alt="" /><figcaption class="cap">Welcome freshers</figcaption></figure>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">07</span></div>
+</section>
+
+<!-- ============================================================ 08 · programmes -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Programmes</span></div>
+  <div class="lines tr"></div>
+  <p class="kick">From first code to first offer</p>
+  <h2>Signature <mark>Programmes</mark></h2>
+  <div class="mt3">
+    <div class="prog"><figure class="ph"><img src="/assets/programs/tc-2.webp" alt="" /></figure>
+      <div><img class="logo" src="/assets/programs/tconnect.png" alt="T-Connect" /><h4 class="mt1">Industry meets campus</h4><p class="mt1"><b>25,000+ visitors</b> across seven editions of Technical Hub’s tech expo: trainees demo live projects at industry stalls.</p></div></div>
+    <div class="prog"><figure class="ph"><img src="/assets/programs/dr-1.webp" alt="" /></figure>
+      <div><img class="logo" src="/assets/programs/driveready.png" style="height:6.4mm" alt="DriveReady" /><h4 class="mt1">Placement-ready programme</h4><p class="mt1"><b>7 successful editions</b>, <b>5,000+ students</b> certified. 100 days on AWS, Flutter, Full Stack and Data, ending in certification and placement drives.</p></div></div>
+    <div class="prog"><figure class="ph"><img src="/assets/programs/owl-1.webp" alt="" /></figure>
+      <div><img class="logo" src="/assets/programs/owl.png" alt="Owl Coder" /><h4 class="mt1">Final-year programme</h4><p class="mt1">Live projects, deployment and the placement run. <b>Owl Coder 5.0</b> · December 2025.</p></div></div>
+    <div class="prog"><figure class="ph"><img src="/assets/programs/ps-2.webp" alt="" /></figure>
+      <div><img class="logo" src="/assets/programs/project-space-t.png" style="height:9mm" alt="Project Space" /><h4 class="mt1">Identify · Solve · Deploy</h4><p class="mt1">Real projects in a 24×7 innovation space, now in <b>season 8</b>. <b>3,000+</b> offline internships.</p></div></div>
+    <div class="prog"><figure class="ph"><img src="/assets/programs/st-1.webp" alt="" /></figure>
+      <div><img class="logo" src="/assets/programs/project-street.png" alt="Project Street" /><h4 class="mt1">Every project, out in the open</h4><p class="mt1">Work on easels along the campus walkway, explained to mentors, faculty and the crowd at every board.</p></div></div>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">08</span></div>
+</section>
+
+<!-- ============================================================ 09 · centres of excellence -->
+<!-- the list is the Road Map app's own (server/data/roadmap.js · CENTRES), with its taglines -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Excellence</span></div>
+  <div class="tab"></div>
+  <p class="kick">On the Technical Hub campus</p>
+  <h2>Centres of <mark>Excellence</mark></h2>
+  <div class="dark mt3" style="display:grid;grid-template-columns:auto 1fr auto;gap:6mm;align-items:center;padding:4.4mm 6mm">
+    <img class="logo" src="/assets/expertise/torii.svg" style="height:6mm;filter:brightness(0) invert(1)" alt="Torii Minds" />
+    <p><b>AI Centre of Excellence</b> · Torii Minds, with Claude, OpenAI and Sarvam</p>
+    <div class="fact" style="border-color:var(--y)"><b>22</b><small>Industry centres</small></div>
+  </div>
+  <div class="coes mt3">
+    <div class="coe"><img src="/assets/coe/redhat.png" alt="Red Hat" /><div><h4>Red Hat</h4><p>Open source, Linux &amp; OpenShift</p></div></div>
+    <div class="coe"><img src="/assets/coe/pega.png" alt="Pega" /><div><h4>Pega</h4><p>Low-code process automation</p></div></div>
+    <div class="coe"><img src="/assets/coe/aws.png" alt="AWS Academy" /><div><h4>AWS Academy</h4><p>Cloud skills at enterprise scale</p></div></div>
+    <div class="coe"><img src="/assets/coe/oracle.png" alt="Oracle Academy" /><div><h4>Oracle Academy</h4><p>Database &amp; enterprise applications</p></div></div>
+    <div class="coe"><img src="/assets/coe/snowflake.png" alt="Snowflake" /><div><h4>Snowflake</h4><p>Data cloud &amp; analytics</p></div></div>
+    <div class="coe"><img src="/assets/coe/aa.png" alt="Automation Anywhere" /><div><h4>Automation Anywhere</h4><p>Intelligent automation &amp; RPA</p></div></div>
+    <div class="coe"><img src="/assets/coe/servicenow.png" alt="ServiceNow" /><div><h4>ServiceNow</h4><p>IT service &amp; workflow platform</p></div></div>
+    <div class="coe"><img src="/assets/coe/microsoft.png" alt="Microsoft" /><div><h4>Microsoft</h4><p>Cloud, data &amp; productivity</p></div></div>
+    <div class="coe"><img src="/assets/coe/gcp.png" alt="Google Cloud" /><div><h4>Google Cloud</h4><p>Cloud infrastructure &amp; data</p></div></div>
+    <div class="coe"><img src="/assets/coe/github.png" alt="GitHub" /><div><h4>GitHub</h4><p>DevOps, source &amp; collaboration</p></div></div>
+    <div class="coe"><img src="/assets/coe/claude.png" alt="Claude" /><div><h4>Claude</h4><p>Applied AI, agents &amp; assistants</p></div></div>
+    <div class="coe"><img src="/assets/coe/openai.png" alt="OpenAI" /><div><h4>OpenAI</h4><p>Generative AI &amp; LLMs</p></div></div>
+    <div class="coe"><img src="/assets/coe/mongodb.png" alt="MongoDB" /><div><h4>MongoDB</h4><p>Modern application databases</p></div></div>
+    <div class="coe"><img src="/assets/coe/cisco.png" alt="Cisco Networking Academy" /><div><h4>Cisco Networking Academy</h4><p>Networking &amp; infrastructure</p></div></div>
+    <div class="coe"><img src="/assets/coe/paloalto.png" alt="Palo Alto" /><div><h4>Palo Alto</h4><p>Network &amp; cloud security</p></div></div>
+    <div class="coe"><img src="/assets/coe/splunk.png" alt="Splunk" /><div><h4>Splunk</h4><p>Observability &amp; security analytics</p></div></div>
+    <div class="coe"><img src="/assets/coe/mile2.png" alt="Mile2" /><div><h4>Mile2</h4><p>Cybersecurity certifications</p></div></div>
+    <div class="coe"><img src="/assets/coe/hubspot.png" alt="HubSpot" /><div><h4>HubSpot</h4><p>CRM &amp; marketing operations</p></div></div>
+    <div class="coe"><img src="/assets/coe/cadence.png" alt="Cadence" /><div><h4>Cadence</h4><p>Electronic design automation</p></div></div>
+    <div class="coe"><img src="/assets/coe/o9.png" alt="o9 Solutions" /><div><h4>o9 Solutions</h4><p>Planning &amp; supply-chain AI</p></div></div>
+    <div class="coe"><img src="/assets/coe/salesforce.png" alt="Salesforce" /><div><h4>Salesforce</h4><p>CRM &amp; the Trailhead platform</p></div></div>
+    <div class="coe"><img src="/assets/coe/juniper.png" alt="Juniper Networks" /><div><h4>Juniper Networks</h4><p>Networking &amp; automation</p></div></div>
+  </div>
+  <div class="grid g2 mt3" style="align-items:start">
+    <figure class="ph acc"><img src="/assets/gallery/x169.webp" alt="" /><figcaption class="cap">Red Hat Academy Challenge 2025 winners</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/x174.webp" alt="" /><figcaption class="cap">Snowflake lab inauguration</figcaption></figure>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">09</span></div>
+</section>
+
+<!-- ============================================================ 10 · certifications -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Certifications</span></div>
+  <div class="lines tr"></div>
+  <p class="kick">From the batch posters</p>
+  <h2>Certifications <mark>in Numbers</mark></h2>
+  <div class="facts mt4" style="grid-template-columns:repeat(4,1fr);gap:6mm 5mm">
+    <div class="fact"><b>16,000+</b><small>Trained &amp; certified</small></div>
+    <div class="fact"><b>11,000</b><small>Certifications</small></div>
+    <div class="fact"><b>559</b><small>C programming</small></div>
+    <div class="fact"><b>302</b><small>In one drive</small></div>
+    <div class="fact"><b>189</b><small>Cisco</small></div>
+    <div class="fact"><b>150+</b><small>AWS Cloud Practitioner</small></div>
+    <div class="fact"><b>149</b><small>Pega System Architect</small></div>
+    <div class="fact"><b>140</b><small>Oracle Java Foundations</small></div>
+    <div class="fact"><b>100+</b><small>Oracle Cloud Associate</small></div>
+    <div class="fact"><b>98</b><small>ServiceNow app developer</small></div>
+    <div class="fact"><b>86</b><small>Azure AI Fundamentals</small></div>
+    <div class="fact"><b>68</b><small>Pega Senior Architect</small></div>
+    <div class="fact"><b>41</b><small>Google Cloud Associate</small></div>
+    <div class="fact"><b>40</b><small>Salesforce</small></div>
+    <div class="fact"><b>31</b><small>ServiceNow administrator</small></div>
+    <div class="fact"><b>10</b><small>Claude Certified Architects</small></div>
+  </div>
+  <div class="grid g2 mt4">
+    <figure class="ph acc"><img src="/assets/gallery/certified-15k.webp" alt="" /><figcaption class="cap">15,000+ certified trainees</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/anthropic-900.webp" alt="" /><figcaption class="cap">900+ Anthropic course completions</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/x305.webp" alt="" /><figcaption class="cap">189 Cisco certifications</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/x142.webp" alt="" /><figcaption class="cap">AWS Summit Bengaluru</figcaption></figure>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">10</span></div>
+</section>
+
+<!-- ============================================================ 11 · placements -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Placements</span></div>
+  <div class="tab"></div>
+  <p class="kick">Technical Hub · golden success</p>
+  <h2>Placements <mark>2025</mark></h2>
+  <figure class="ph acc mt4"><img src="/assets/gallery/placements-2025.webp" alt="" /><figcaption class="cap">The 2025 placements board</figcaption></figure>
+  <div class="grid mt4" style="grid-template-columns:1fr 58mm;gap:8mm;align-items:start">
+    <div><table>
+      <tr><th>Company</th><th>Package</th><th>Selections</th></tr>
+      <tr><td>Google</td><td class="n">1.35 LPM</td><td>1</td></tr>
+      <tr><td>Amazon</td><td class="n">1.10 LPM</td><td>1</td></tr>
+      <tr><td>Walmart</td><td class="n">27 LPA · 1 LPM</td><td>6 · 7</td></tr>
+      <tr><td>Visa</td><td class="n">₹90,000 / month</td><td>2</td></tr>
+      <tr><td>Cisco</td><td class="n">16 LPA</td><td>1</td></tr>
+      <tr><td>Increff</td><td class="n">13.44 LPA</td><td>1</td></tr>
+      <tr><td>Lavendel Consulting</td><td class="n">12 LPA</td><td>3</td></tr>
+      <tr><td>Thoughtworks</td><td class="n">11.10 LPA</td><td>1</td></tr>
+      <tr><td>Maersk</td><td class="n">10.83 LPA</td><td>10</td></tr>
+      <tr><td>Lloyds</td><td class="n">10.71 LPA</td><td>3</td></tr>
+      <tr><td>HSBC</td><td class="n">9 LPA</td><td>5</td></tr>
+      <tr><td>LG</td><td class="n">7.5 LPA</td><td>9</td></tr>
+    </table>
+    <p class="cap" style="margin-top:2.4mm">Also: Flipkart, Myntra, Airbus, ServiceNow, Red Hat, Philips</p></div>
+    <div>
+      <div class="facts" style="grid-template-columns:1fr 1fr;gap:4mm">
+        <div class="fact"><b>31.31</b><small>LPA · Amazon</small></div>
+        <div class="fact"><b>29.27</b><small>LPA · Hitachi</small></div>
+        <div class="fact"><b>22.6</b><small>LPA · Walmart</small></div>
+        <div class="fact"><b>17.6</b><small>LPA · ServiceNow</small></div>
+        <div class="fact"><b>290</b><small>Offers in 100 days</small></div>
+        <div class="fact"><b>101</b><small>Selections</small></div>
+      </div>
+      <figure class="ph mt3"><img src="/assets/gallery/x451.webp" alt="" /><figcaption class="cap">Placed at Amazon, 31.31 LPA</figcaption></figure>
+    </div>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">11</span></div>
+</section>
+
+<!-- ============================================================ 12 · products -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Innovation</span></div>
+  <div class="lines tr"></div>
+  <p class="kick">Built in-house</p>
+  <h2>Products &amp; <mark>Launches</mark></h2>
+  <div class="grid g4 mt4" style="gap:4mm">
+    <div class="pc"><img class="logo" src="/assets/expertise/myna.webp" data-bg="#f6f5f2" alt="Myna" /><h4>Myna</h4><p>A communication-building app.</p></div>
+    <div class="pc"><img class="logo" src="/assets/expertise/owlcoder.webp" data-bg="#f6f5f2" alt="Owl Coder" /><h4>Owl Coder</h4><p>Coding practice and assessment.</p></div>
+    <div class="pc"><img class="logo" src="/assets/expertise/tag.webp" data-bg="#f6f5f2" alt="T@G" /><h4>T@G</h4><p>Plans and manages digital marketing.</p></div>
+    <div class="pc"><img class="logo" src="/assets/expertise/hibi.webp" data-bg="#f6f5f2" alt="HiBi" /><h4>HiBi</h4><p>An HRMS platform.</p></div>
+    <div class="pc"><img class="logo" src="/assets/expertise/mpod.webp" data-bg="#f6f5f2" alt="mPod" /><h4>mPod</h4><p>An AI interview platform.</p></div>
+    <div class="pc"><img class="logo" src="/assets/vision/aptlogic.png" alt="AptLogic" /><h4>AptLogic</h4><p>Aptitude and logic improvement.</p></div>
+    <div class="pc"><img class="logo" src="/assets/expertise/maya.webp" data-bg="#f6f5f2" alt="Maya" /><h4>Maya AI</h4><p>Built in-house by Technical Hub.</p></div>
+    <div class="pc" style="background:var(--y)"><div class="fact" style="border-color:var(--ink)"><b>7</b><small style="color:var(--ink)">Products built</small></div></div>
+  </div>
+  <div class="grid g3 mt4" style="gap:5mm;align-items:start">
+    <div><div style="display:flex;gap:2mm;align-items:center"><img class="logo" src="/assets/expertise/besafe-logo.webp" data-bg="#ffffff" style="height:8mm" alt="BeSafe" /><img class="logo" src="/assets/expertise/usafe-logo.svg" style="height:8mm" alt="U Safe" /></div>
+      <h4 class="mt2">BeSafe &amp; U Safe</h4><p class="small mt1">Public and women safety apps with the Vijayawada City Police and the Rajamahendravaram Urban Police SHE Team. BeSafe was launched by Olympic medallist PV Sindhu &amp; the State Home Minister.</p></div>
+    <div><h4>HRMS for Oman</h4><p class="small mt1">A complete Human Resource Management System, developed and implemented for the Ministry of Labour, Government of Oman.</p></div>
+    <div><h4>India’s first super app</h4><p class="small mt1">The Torii super app, presented as India’s first.</p></div>
+  </div>
+  <div class="grid g3 mt4" style="gap:5mm;align-items:start">
+    <figure class="ph acc"><img src="/assets/gallery/safety-2.webp" alt="" /><figcaption class="cap">Application launch, Vijayawada City Police</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/oman-sign.webp" alt="" /><figcaption class="cap">Agreement signed in Oman</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/x338.webp" alt="" /><figcaption class="cap">Launching India’s first super app</figcaption></figure>
+  </div>
+  <div class="grid g3 mt3" style="gap:5mm;align-items:start">
+    <figure class="ph"><img src="/assets/gallery/safety-3.webp" alt="" /><figcaption class="cap">Launch with the Commissioner of Police</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/insafe.webp" alt="" /><figcaption class="cap">InSafe application, students on board</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/oman-team.webp" alt="" /><figcaption class="cap">The team in Oman</figcaption></figure>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">12</span></div>
+</section>
+
+<!-- ============================================================ 13 · branding -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Branding</span></div>
+  <div class="tab"></div>
+  <p class="kick">Organic reach</p>
+  <h2>Digital <mark>Branding</mark></h2>
+  <div class="grid mt4" style="grid-template-columns:1fr 52mm;gap:9mm;align-items:start">
+    <div>
+      <div class="facts" style="grid-template-columns:repeat(3,1fr)">
+        <div class="fact"><b>24K+</b><small>Technical Hub · LinkedIn</small></div>
+        <div class="fact"><b>8K+</b><small>Technical Hub · Facebook</small></div>
+        <div class="fact"><b>4K+</b><small>Torii Minds · LinkedIn</small></div>
+      </div>
+      <ul class="ul mt4">
+        <li><b>NGI</b>: digital branding for the Nagarjuna Group of Institutions.</li>
+        <li><b>T@G</b>: an in-house app to plan and manage digital marketing, shown at the nasscom Technology Confluence.</li>
+      </ul>
+      <div class="ybox mt4"><h3>Built from the ground up</h3><p class="mt1">Organic, consistent storytelling for Technical Hub and Torii Minds: every launch, partnership and placement shared as it happens.</p></div>
+    </div>
+    <figure class="ph acc"><img src="/assets/gallery/nasscom-tag.webp" alt="" /><figcaption class="cap">T@G at the nasscom Technology Confluence</figcaption></figure>
+  </div>
+  <figure class="ph mt4"><img src="/assets/gallery/selfie-banner.webp" alt="" /><figcaption class="cap">“These trainees are God’s gift to me”</figcaption></figure>
+  <div class="grid g2 mt3" style="align-items:start">
+    <figure class="ph"><img src="/assets/gallery/press-2.webp" alt="" /><figcaption class="cap">T-Connect 3.0 press meet</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/stadium.webp" alt="" style="width:auto;height:48.4mm;max-width:100%" /><figcaption class="cap">Trainees at the stadium</figcaption></figure>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">13</span></div>
+</section>
+
+<!-- ============================================================ 14 · frames of impact -->
+<section class="page">
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Frames of Impact</span></div>
+  <div class="lines tr"></div>
+  <p class="kick">Launches, honours, partnerships</p>
+  <h2>Frames of <mark>Impact</mark></h2>
+  <div class="grid g3 mt4" style="gap:4mm;align-items:start">
+    <figure class="ph"><img src="/assets/gallery/tpo-award.webp" alt="" /><figcaption class="cap">Honoured at the TPO Consortium</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/x449.webp" alt="" /><figcaption class="cap">10 years of Technical Hub</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/x244.webp" alt="" /><figcaption class="cap">At the podium</figcaption></figure>
+  </div>
+  <div class="grid g2 mt3" style="gap:4mm;align-items:start">
+    <figure class="ph"><img src="/assets/gallery/gitex-2.webp" alt="" /><figcaption class="cap">At the Technical Hub booth, GITEX Global</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/pega-mou.webp" alt="" /><figcaption class="cap">Pegasystems × Technical Hub MoU, February 2023</figcaption></figure>
+  </div>
+  <div class="grid g2 mt3" style="gap:4mm;align-items:start">
+    <figure class="ph"><img src="/assets/gallery/parents-selfie.webp" alt="" /><figcaption class="cap">Trusted by parents</figcaption></figure>
+    <figure class="ph"><img src="/assets/gallery/x103.webp" alt="" style="width:auto;max-width:100%;height:48.4mm;margin:0 auto" /><figcaption class="cap">GAISA Global Artificial Intelligence Awards</figcaption></figure>
+  </div>
+  <div class="foot"><span><b>Babji Neelam</b> · Profile 2026</span><span class="no">14</span></div>
+</section>
+
+<!-- ============================================================ 15 · thanks / contact -->
+<section class="page thanks">
+  <div class="lines tr" style="width:170mm;height:170mm;top:-40mm;right:-50mm"></div>
+  <div class="run"><img src="/assets/th-logo.png" alt="" /><span>Contact</span></div>
+  <p class="kick mt4">Let’s connect</p>
+  <h1 class="mt2">THANK<br /><mark>YOU</mark></h1>
+  <div class="grid mt4" style="grid-template-columns:1fr 92mm;gap:6mm;align-items:end">
+    <div>
+      <h3 style="font-size:16pt">Babji Neelam</h3>
+      <p class="cap" style="margin-top:1mm;font-size:8pt">Founder &amp; CEO · Technical Hub &amp; Torii Minds</p>
+      <ul class="ul mt3">
+        <li><b>Mobile</b> · +91 98498 01605</li>
+        <li><b>Email</b> · babjineelam@gmail.com</li>
+        <li><b>LinkedIn</b> · linkedin.com/in/babjineelam</li>
+        <li><b>Instagram</b> · instagram.com/babjineelam</li>
+        <li><b>Facebook</b> · facebook.com/babji.neelam</li>
+        <li><b>YouTube</b> · youtube.com/@technicalhubio</li>
+        <li><b>Oracle Academy</b> · success story, “Bridging the Talent Gap”</li>
+      </ul>
+      <div style="display:flex;align-items:center;gap:5mm" class="mt4"><img class="logo" src="/assets/th-logo.png" style="height:8mm" alt="" /><img class="logo" src="/assets/expertise/torii.svg" style="height:6.4mm" alt="" /></div>
+    </div>
+    <img class="cut" src="/assets/babji-seated.webp" data-bg="#ffffff" style="width:92mm" alt="Babji Neelam" />
+  </div>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:12mm;background:var(--ink)"></div>
+  <div style="position:absolute;left:16mm;bottom:12mm;width:40mm;height:3mm;background:var(--y)"></div>
+</section>
+
+</body>
+</html>

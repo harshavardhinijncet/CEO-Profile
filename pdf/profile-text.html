@@ -1,0 +1,327 @@
+<!doctype html>
+<!-- Babji Neelam · text profile — a formal CEO résumé in portrait A4: no photos, one clear section per heading,
+     dates in a left column, achievements as bullets. Every fact comes from the site's data, the Road Map /
+     Company Profile apps or the posters the client supplied. Build: npm run pdf -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Babji Neelam · Résumé</title>
+<link rel="stylesheet" href="/pdf/fonts/fonts.css" />
+<style>
+  @page{ size:210mm 297mm; margin:0; }
+  :root{ --y:#f5b301; --y-d:#b98600; --ink:#141414; --ink-2:#3c3c3c; --mute:#85827c; --line:#dcd8d1; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ background:#8a8a8a; }
+  body{ font-family:"Open Sans",Arial,sans-serif; color:var(--ink); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .page{ position:relative; width:210mm; height:297mm; overflow:hidden; background:#fff; page-break-after:always; margin:0 auto 8mm; padding:16mm 18mm 20mm; }
+  .page:last-child{ page-break-after:auto; }
+  @media print{ html,body{ background:#fff; } .page{ margin:0; } }
+  .page::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:2.2mm; background:var(--y); }
+
+  /* masthead (page 1) and running head (later pages) */
+  .mast{ display:grid; grid-template-columns:1fr auto; gap:8mm; align-items:end; padding-bottom:5mm; border-bottom:.6mm solid var(--ink); }
+  .mast h1{ font-family:Urbanist,sans-serif; font-size:30pt; font-weight:900; letter-spacing:.4pt; line-height:1; text-transform:uppercase; }
+  .mast .title{ margin-top:2.6mm; font-family:Urbanist,sans-serif; font-size:11pt; font-weight:600; color:var(--ink-2); text-align:left; }
+  .mast .title b{ color:var(--y-d); font-weight:800; }
+  .mast ul{ list-style:none; text-align:right; font-size:8pt; line-height:1.75; color:var(--ink-2); }
+  .mast ul b{ font-family:Urbanist,sans-serif; font-size:7pt; font-weight:800; letter-spacing:1pt; text-transform:uppercase; color:var(--mute); margin-right:2mm; }
+  .run{ display:flex; justify-content:space-between; align-items:baseline; padding-bottom:3mm; border-bottom:.3mm solid var(--line);
+    font-family:Urbanist,sans-serif; font-size:8pt; font-weight:700; letter-spacing:1pt; text-transform:uppercase; color:var(--mute); }
+  .run b{ color:var(--ink); font-weight:900; }
+  .foot{ position:absolute; left:18mm; right:18mm; bottom:10mm; display:flex; justify-content:space-between;
+    font-family:Urbanist,sans-serif; font-size:7pt; font-weight:700; letter-spacing:1pt; text-transform:uppercase; color:var(--mute); }
+
+  /* sections */
+  section.s{ margin-top:6.4mm; }
+  .s > h2{ display:flex; align-items:center; gap:3mm; font-family:Urbanist,sans-serif; font-size:10.5pt; font-weight:900; letter-spacing:1.6pt; text-transform:uppercase; color:var(--ink); }
+  .s > h2::before{ content:""; width:3mm; height:3mm; background:var(--y); }
+  .s > h2::after{ content:""; flex:1; height:.3mm; background:var(--line); }
+  .s > .body{ margin-top:3.4mm; }
+  p{ font-size:8.8pt; line-height:1.65; color:var(--ink-2); text-align:justify; }
+  b{ color:var(--ink); }
+
+  ul.b{ list-style:none; display:flex; flex-direction:column; gap:1.3mm; }
+  ul.b li{ position:relative; padding-left:4.4mm; font-size:8.5pt; line-height:1.55; color:var(--ink-2); }
+  ul.b li::before{ content:""; position:absolute; left:.4mm; top:2.1mm; width:1.5mm; height:1.5mm; background:var(--y); }
+  ul.b.cols2{ display:grid; grid-template-columns:1fr 1fr; gap:1.3mm 9mm; }
+  ul.b.cols3{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.3mm 6mm; }
+  .cols2{ display:grid; grid-template-columns:1fr 1fr; gap:2mm 9mm; }
+
+  /* résumé entries: dates on the left, role and points on the right */
+  .e{ display:grid; grid-template-columns:36mm 1fr; gap:6mm; padding:3.2mm 0; border-top:.3mm dotted var(--line); }
+  .e:first-child{ border-top:0; padding-top:0; }
+  .e .when{ font-family:Urbanist,sans-serif; font-size:8pt; font-weight:800; letter-spacing:.6pt; color:var(--y-d); text-transform:uppercase; line-height:1.4; }
+  .e .when small{ display:block; margin-top:.8mm; font-size:7pt; font-weight:700; color:var(--mute); }
+  .e h3{ font-family:Urbanist,sans-serif; font-size:10pt; font-weight:800; color:var(--ink); }
+  .e h3 span{ font-weight:600; color:var(--ink-2); }
+  .e ul.b{ margin-top:1.6mm; }
+
+  /* key figures */
+  .figs{ display:grid; grid-template-columns:repeat(4,1fr); border:.3mm solid var(--line); }
+  .figs div{ padding:3.2mm 4mm; border-left:.3mm solid var(--line); }
+  .figs div:first-child{ border-left:0; }
+  .figs b{ display:block; font-family:Urbanist,sans-serif; font-size:16pt; font-weight:900; line-height:1; }
+  .figs small{ display:block; margin-top:1.2mm; font-family:Urbanist,sans-serif; font-size:6.8pt; font-weight:700; letter-spacing:.8pt; text-transform:uppercase; color:var(--mute); }
+
+  /* compact tables */
+  table{ width:100%; border-collapse:collapse; font-size:8.2pt; }
+  th{ text-align:left; padding:1.6mm 2mm; border-bottom:.5mm solid var(--ink); font-family:Urbanist,sans-serif; font-size:7pt; font-weight:800; letter-spacing:1pt; text-transform:uppercase; color:var(--mute); }
+  td{ padding:1.4mm 2mm; border-bottom:.3mm solid var(--line); color:var(--ink-2); }
+  td:first-child{ font-weight:700; color:var(--ink); }
+  .lab{ font-family:Urbanist,sans-serif; font-size:8pt; font-weight:800; letter-spacing:1pt; text-transform:uppercase; color:var(--ink); margin-bottom:2mm; text-align:left; }
+  .quote{ margin-top:3mm; padding:3.4mm 5mm; border-left:1.2mm solid var(--y); background:#faf8f3; font-family:Urbanist,sans-serif; font-size:11pt; line-height:1.45; color:var(--ink); text-align:left; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ page 1 · summary -->
+<div class="page">
+  <header class="mast">
+    <div>
+      <h1>Babji Neelam</h1>
+      <p class="title">Founder &amp; CEO · <b>Technical Hub</b> &amp; <b>Torii Minds</b></p>
+    </div>
+    <ul>
+      <li><b>Mobile</b>+91 98498 01605</li>
+      <li><b>Email</b>babjineelam@gmail.com</li>
+      <li><b>LinkedIn</b>linkedin.com/in/babjineelam</li>
+    </ul>
+  </header>
+
+  <section class="s"><h2>Professional Summary</h2><div class="body">
+    <p>Founder and Chief Executive with three decades across technical education, global IT and entrepreneurship. Began in 1997 as a lab technician at <b>APTECH</b> and spent seven years teaching technology; worked eleven years in global IT as a Java Software Engineer at <b>IBM</b> and a Project Manager at <b>Wipro Technologies</b>, on site in Australia and Switzerland. Founded <b>Technical Hub</b> in 2016, a skill-development and incubation centre bridging academia and industry, and launched <b>Torii Minds</b> in 2025, an AI-driven tech-education platform backed by <b>NCC</b>. Committed to one idea: academic success must translate into employability, so that every graduate is <b>ready to contribute from day one</b>.</p>
+    <p class="quote">“Talent was <b>never</b> the shortage. <b>Industry readiness</b> was. My mission is to bridge that gap.”</p>
+  </div></section>
+
+  <section class="s"><h2>Key Figures</h2><div class="body">
+    <div class="figs">
+      <div><b>16,000+</b><small>Students certified</small></div>
+      <div><b>22</b><small>Industry Centres of Excellence</small></div>
+      <div><b>20+</b><small>B2B apps deployed</small></div>
+      <div><b>7</b><small>Products built</small></div>
+    </div>
+  </div></section>
+
+  <section class="s"><h2>Core Competencies</h2><div class="body">
+    <ul class="b cols2">
+      <li>Strategic leadership and venture building</li>
+      <li>Industry-aligned technical curriculum</li>
+      <li>Training, certification and placement at scale</li>
+      <li>Enterprise application delivery</li>
+      <li>Academic and industry partnerships</li>
+      <li>AI-first education</li>
+      <li>Programme and project management</li>
+      <li>Digital branding and outreach</li>
+    </ul>
+  </div></section>
+
+  <section class="s"><h2>Current Leadership Roles</h2><div class="body">
+    <div class="e"><div class="when">2016 – Present</div>
+      <div><h3>Founder &amp; CEO <span>· Technical Hub</span></h3>
+        <ul class="b"><li>Skill-development and incubation centre whose certification-aligned programmes make engineers job-ready.</li>
+          <li>Grew from a training centre into a solutions company from 2019, building enterprise applications for corporate clients.</li></ul></div></div>
+    <div class="e"><div class="when">2025 – Present</div>
+      <div><h3>Founder &amp; CEO <span>· Torii Minds</span></h3>
+        <ul class="b"><li>AI-driven tech-education platform for coding, AI and career readiness, backed by NCC; named after the Japanese Torii gate.</li>
+          <li>Runs the AI Centre of Excellence with Claude, OpenAI and Sarvam.</li></ul></div></div>
+  </div></section>
+
+
+  <div class="foot"><span>Babji Neelam · Résumé</span><span>1 / 4</span></div>
+</div>
+
+<!-- ============================================================ page 2 · experience -->
+<div class="page">
+  <div class="run"><span><b>Babji Neelam</b> · Founder &amp; CEO</span><span>Professional Experience</span></div>
+
+  <section class="s"><h2>Career Overview</h2><div class="body">
+    <table>
+      <tr><th style="width:36mm">Period</th><th>Phase</th><th>Organisations</th></tr>
+      <tr><td>1997 – 2004</td><td>Technical education</td><td>APTECH · Datapro · ICSS · NetGSC · Aditya colleges</td></tr>
+      <tr><td>2005 – 2016</td><td>Global IT</td><td>IBM · Wipro Technologies</td></tr>
+      <tr><td>2016 – Present</td><td>Entrepreneurship</td><td>Technical Hub · Torii Minds</td></tr>
+    </table>
+  </div></section>
+
+  <section class="s"><h2>Professional Experience</h2><div class="body">
+    <div class="e"><div class="when">2016 – Present<small>Technical Hub</small></div>
+      <div><h3>Founder &amp; CEO <span>· Technical Hub</span></h3>
+        <ul class="b">
+          <li>Founded Technical Hub in 2016 to bridge the gap between academia and industry.</li>
+          <li>Established <b>22 industry Centres of Excellence</b> on the Technical Hub campus.</li>
+          <li>Trained and certified <b>16,000+</b> students across cloud, enterprise platforms, networking and AI.</li>
+          <li>Took the company into enterprise solutions from 2019; <b>20+ B2B applications</b> deployed and <b>7 products</b> built in-house.</li>
+          <li>Delivered a complete HRMS for the Ministry of Labour, Government of Oman.</li>
+          <li>Built the BeSafe and U Safe public and women safety apps with the Vijayawada City Police and the Rajamahendravaram Urban Police SHE Team.</li>
+        </ul></div></div>
+    <div class="e"><div class="when">2025 – Present<small>Torii Minds</small></div>
+      <div><h3>Founder &amp; CEO <span>· Torii Minds</span></h3>
+        <ul class="b">
+          <li>Launched an AI-driven tech-education platform, backed by NCC.</li>
+          <li>Partnerships: Claude (Certified Services Partner), OpenAI (Select Partner) and Sarvam AI.</li>
+          <li><b>10 Claude Certified Architects</b>, <b>900+</b> Anthropic course completions and <b>300+</b> AI Ready Engineer trainees.</li>
+          <li>Presented the Torii super app as India’s first super app.</li>
+        </ul></div></div>
+    <div class="e"><div class="when">Feb 2005 – Jan 2016<small>11 years · global IT</small></div>
+      <div><h3>Project Manager <span>· Wipro Technologies</span></h3>
+        <ul class="b"><li>Led delivery for global clients.</li></ul>
+        <h3 style="margin-top:1.8mm">Java Software Engineer <span>· IBM</span></h3>
+        <ul class="b"><li>Java engineering for finance and fintech platforms.</li>
+          <li>On site in Australia (Sydney, Brisbane) and Switzerland (Zurich, Basel).</li></ul></div></div>
+    <div class="e"><div class="when">Aug 1997 – Dec 2004<small>7 years · teaching</small></div>
+      <div><h3>Faculty <span>· Aditya Engineering College</span></h3>
+        <ul class="b"><li>Prepared engineering cohorts for the global tech industry.</li></ul>
+        <h3 style="margin-top:1.8mm">Faculty <span>· Aditya Degree College</span></h3>
+        <ul class="b"><li>Brought industry-focused teaching into undergraduate classrooms.</li></ul>
+        <h3 style="margin-top:1.8mm">Senior Technical Trainer <span>· NetGSC</span></h3>
+        <ul class="b"><li>Taught advanced technologies and mentored fellow trainers.</li></ul>
+        <h3 style="margin-top:1.8mm">Technical Trainer <span>· ICSS</span> &nbsp;·&nbsp; Junior Technical Trainer <span>· Datapro</span></h3>
+        <ul class="b"><li>Delivered structured, advanced curricula; turned complex concepts into lessons for beginners.</li></ul>
+        <h3 style="margin-top:1.8mm">Lab Technician <span>· APTECH</span></h3>
+        <ul class="b"><li>Hands-on lab support at the grassroots of technical education.</li></ul></div></div>
+  </div></section>
+
+  <div class="foot"><span>Babji Neelam · Résumé</span><span>2 / 4</span></div>
+</div>
+
+<!-- ============================================================ page 3 · programmes & partnerships -->
+<div class="page">
+  <div class="run"><span><b>Babji Neelam</b> · Founder &amp; CEO</span><span>Programmes &amp; Partnerships</span></div>
+
+  <section class="s"><h2>Education Programmes</h2><div class="body">
+    <p class="lab">The Four-Year Engineer · B.Tech roadmap, semester 1-1 to 4-2</p>
+    <ul class="b cols2">
+      <li><b>Year 1 · Bamboo Coder</b>: programming logic, first AI literacy, the habits of a coder.</li>
+      <li><b>Year 2 · SkillUp Coder</b>: core computer science, real projects, a first taste of industry.</li>
+      <li><b>Year 3 · Drive Ready · AI Ready Engineer</b>: industry stacks, AI engineering, placement readiness.</li>
+      <li><b>Year 4 · Owl Coder</b>: production AI, live campus projects and the placement run.</li>
+      <li><b>Moon Coder</b> (semester 2-2 to 3-1): extra coding hours for competitive-coding speed.</li>
+      <li><b>AI Ready Engineer</b>: from the first AI class to an AI engineer, with Torii Minds.</li>
+    </ul>
+    <p class="lab" style="margin-top:4mm">Signature programmes</p>
+    <ul class="b">
+      <li><b>T-Connect</b>: Technical Hub’s tech expo; <b>25,000+ visitors</b> across seven editions.</li>
+      <li><b>DriveReady</b>: 100 days on AWS, Flutter, Full Stack and Data; <b>7 editions</b>, <b>5,000+</b> certified.</li>
+      <li><b>Owl Coder</b>: live projects, deployment and the placement run; Owl Coder 5.0 in December 2025.</li>
+      <li><b>Project Space</b>: real projects in a 24×7 innovation space, now in season 8; <b>3,000+</b> offline internships.</li>
+      <li><b>Project Street</b>: projects shown on easels along the campus walkway to mentors, faculty and visitors.</li>
+    </ul>
+  </div></section>
+
+  <section class="s"><h2>Centres of Excellence</h2><div class="body">
+    <p class="lab">22 industry centres on the Technical Hub campus</p>
+    <!-- the Road Map app's own list (server/data/roadmap.js · CENTRES), with its taglines -->
+    <ul class="b cols2">
+      <li><b>Red Hat</b> · open source, Linux &amp; OpenShift</li>
+      <li><b>Pega</b> · low-code process automation</li>
+      <li><b>AWS Academy</b> · cloud skills at enterprise scale</li>
+      <li><b>Oracle Academy</b> · database &amp; enterprise applications</li>
+      <li><b>Snowflake</b> · data cloud &amp; analytics</li>
+      <li><b>Automation Anywhere</b> · intelligent automation &amp; RPA</li>
+      <li><b>ServiceNow</b> · IT service &amp; workflow platform</li>
+      <li><b>Microsoft</b> · cloud, data &amp; productivity</li>
+      <li><b>Google Cloud</b> · cloud infrastructure &amp; data</li>
+      <li><b>GitHub</b> · DevOps, source &amp; collaboration</li>
+      <li><b>Claude</b> · applied AI, agents &amp; assistants</li>
+      <li><b>OpenAI</b> · generative AI &amp; LLMs</li>
+      <li><b>MongoDB</b> · modern application databases</li>
+      <li><b>Cisco Networking Academy</b> · networking &amp; infrastructure</li>
+      <li><b>Palo Alto</b> · network &amp; cloud security</li>
+      <li><b>Splunk</b> · observability &amp; security analytics</li>
+      <li><b>Mile2</b> · cybersecurity certifications</li>
+      <li><b>HubSpot</b> · CRM &amp; marketing operations</li>
+      <li><b>Cadence</b> · electronic design automation</li>
+      <li><b>o9 Solutions</b> · planning &amp; supply-chain AI</li>
+      <li><b>Salesforce</b> · CRM &amp; the Trailhead platform</li>
+      <li><b>Juniper Networks</b> · networking &amp; automation</li>
+    </ul>
+    <p class="lab" style="margin-top:4mm">AI Centre of Excellence</p>
+    <ul class="b"><li><b>Torii Minds</b>, with Claude, OpenAI and Sarvam · Claude Certified Services Partner · OpenAI Select Partner</li></ul>
+  </div></section>
+
+  <div class="foot"><span>Babji Neelam · Résumé</span><span>3 / 4</span></div>
+</div>
+
+<!-- ============================================================ page 4 · impact & innovation -->
+<div class="page">
+  <div class="run"><span><b>Babji Neelam</b> · Founder &amp; CEO</span><span>Impact &amp; Innovation</span></div>
+
+  <section class="s"><h2>Certifications Delivered</h2><div class="body">
+    <ul class="b cols3">
+      <li><b>16,000+</b> trained &amp; certified</li><li><b>11,000</b> certifications</li><li><b>559</b> C programming</li>
+      <li><b>302</b> in one drive</li><li><b>189</b> Cisco</li><li><b>150+</b> AWS Cloud Practitioner</li>
+      <li><b>149</b> Pega System Architect</li><li><b>140</b> Oracle Java Foundations</li><li><b>100+</b> Oracle Cloud Associate</li>
+      <li><b>98</b> ServiceNow app developer</li><li><b>86</b> Azure AI Fundamentals</li><li><b>68</b> Pega Senior System Architect</li>
+      <li><b>41</b> Google Cloud Associate</li><li><b>40</b> Salesforce</li><li><b>31</b> ServiceNow administrator</li>
+      <li><b>10</b> Claude Certified Architects</li>
+    </ul>
+  </div></section>
+
+  <section class="s"><h2>Placements 2025</h2><div class="body">
+    <div class="cols2" style="align-items:start">
+      <table>
+        <tr><th>Company</th><th>Package</th><th>Selections</th></tr>
+        <tr><td>Google</td><td>1.35 LPM</td><td>1</td></tr>
+        <tr><td>Amazon</td><td>1.10 LPM</td><td>1</td></tr>
+        <tr><td>Walmart</td><td>27 LPA · 1 LPM</td><td>6 · 7</td></tr>
+        <tr><td>Visa</td><td>₹90,000 / month</td><td>2</td></tr>
+        <tr><td>Cisco</td><td>16 LPA</td><td>1</td></tr>
+        <tr><td>Increff</td><td>13.44 LPA</td><td>1</td></tr>
+      </table>
+      <table>
+        <tr><th>Company</th><th>Package</th><th>Selections</th></tr>
+        <tr><td>Lavendel Consulting</td><td>12 LPA</td><td>3</td></tr>
+        <tr><td>Thoughtworks</td><td>11.10 LPA</td><td>1</td></tr>
+        <tr><td>Maersk</td><td>10.83 LPA</td><td>10</td></tr>
+        <tr><td>Lloyds</td><td>10.71 LPA</td><td>3</td></tr>
+        <tr><td>HSBC</td><td>9 LPA</td><td>5</td></tr>
+        <tr><td>LG</td><td>7.5 LPA</td><td>9</td></tr>
+      </table>
+    </div>
+    <ul class="b" style="margin-top:3mm">
+      <li>Top packages: <b>31.31 LPA</b> Amazon · <b>29.27 LPA</b> Hitachi · <b>22.6 LPA</b> Walmart · <b>17.6 LPA</b> ServiceNow</li>
+      <li><b>290 offers</b> in 100 days · <b>101 selections</b> · also Flipkart, Myntra, Airbus, ServiceNow, Red Hat, Philips</li>
+    </ul>
+  </div></section>
+
+  <section class="s"><h2>Products &amp; Innovation</h2><div class="body">
+    <ul class="b cols2">
+      <li><b>Myna</b> · communication-building app</li>
+      <li><b>Owl Coder</b> · coding practice and assessment</li>
+      <li><b>T@G</b> · digital-marketing planning and management</li>
+      <li><b>HiBi</b> · HRMS platform</li>
+      <li><b>mPod</b> · AI interview platform</li>
+      <li><b>AptLogic</b> · aptitude and logic improvement</li>
+      <li><b>Maya AI</b> · built in-house by Technical Hub</li>
+      <li><b>HRMS for Oman</b> · Ministry of Labour, Government of Oman</li>
+    </ul>
+    <ul class="b" style="margin-top:1.3mm">
+      <li><b>BeSafe &amp; U Safe</b> · public and women safety apps; BeSafe launched by Olympic medallist PV Sindhu and the State Home Minister</li>
+    </ul>
+  </div></section>
+
+  <section class="s"><h2>Recognition &amp; Engagements</h2><div class="body">
+    <ul class="b cols2">
+      <li>Speaker, Cisco Networking Academy Conference 2019</li>
+      <li>Pegasystems × Technical Hub MoU, February 2023</li>
+      <li>Honoured at the Training &amp; Placement Officers’ Consortium</li>
+      <li>Honoured at Aditya Degree &amp; PG College</li>
+      <li>Technical Hub at GITEX Global, Dubai</li>
+      <li>Oracle Academy success story, “Bridging the Talent Gap”</li>
+    </ul>
+  </div></section>
+
+  <section class="s"><h2>Digital Presence</h2><div class="body">
+    <ul class="b cols2">
+      <li><b>24K+</b> Technical Hub LinkedIn · <b>8K+</b> Facebook</li>
+      <li><b>4K+</b> Torii Minds LinkedIn</li>
+      <li>Digital branding for the Nagarjuna Group of Institutions</li>
+      <li>instagram.com/babjineelam · facebook.com/babji.neelam</li>
+    </ul>
+  </div></section>
+
+  <div class="foot"><span>Babji Neelam · Résumé</span><span>4 / 4</span></div>
+</div>
+
+</body>
+</html>
